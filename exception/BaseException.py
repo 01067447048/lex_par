@@ -13,6 +13,9 @@ class JFileReadError(BaseException):
 class JFileWriteError(BaseException):
     pass
 
+class JMeasureError(BaseException):
+    pass
+
 class ReturnTrigger(JRuntimeError):
     def __init__(self, value):
         self.value = value

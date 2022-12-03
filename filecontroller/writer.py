@@ -3,8 +3,9 @@ import os
 from typing import List
 
 class Writer:
-    def __init__(self, file_path: str, default_path: str, tokens: List):
+    def __init__(self, file_path: str, default_path: str, tokens: List, token_save_path: str, str_token: str):
         self.default_path = './' + default_path + '/' + file_path
+        self.token_save_path = './' + token_save_path + '/' + file_path
         if len(file_path.split('.')) < 2:
             raise JFileWriteError('Writer Error')
 
@@ -17,6 +18,13 @@ class Writer:
                     file.write(f'{token}')
                 else:
                     file.write(f'{token}, ')
+            file.close()
+
+            if not os.path.exists('./' + token_save_path):
+                os.makedirs('./' + token_save_path)
+
+            file = open(self.token_save_path, 'w')
+            file.write(str_token)
             file.close()
         except JFileWriteError:
             print('Create Directory Error')

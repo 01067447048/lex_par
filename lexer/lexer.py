@@ -95,7 +95,6 @@ class Lexer:
                 TokenType.DOUBLE_STRING if ch == '"' else TokenType.SINGLE_STRING,
                 self.source[self.start: self.current].strip(ch)
             )
-            print(self.source[self.start: self.current].strip(ch) + "========================================")
         elif is_digit(ch):
             while is_digit(self.peek()):
                 self.advance()

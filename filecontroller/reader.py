@@ -5,9 +5,7 @@ class Reader:
     def __init__(self, file_path: str):
         self.source = ''
         self.write_path = ''
-        print(file_path)
         paths = file_path.split('/')
-        print(paths)
         if len(paths) < 2:
             raise JFileReadError("File Read Error")
 
