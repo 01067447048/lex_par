@@ -5,7 +5,10 @@ from exception import JMeasureError
 class Measure:
 
     def __init__(self, source: str):
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        # self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        # self.model = SentenceTransformer('flax-sentence-embeddings/st-codesearch-distilroberta-base')
+        # self.model = SentenceTransformer('mchochlov/codebert-base-cd-ft')
+        self.model = SentenceTransformer('krlvi/sentence-t5-base-nlpl-code_search_net')
         self.target_embedding = self.model.encode(source, convert_to_tensor=True)
         self.source_embedding = []
         self.pair = []

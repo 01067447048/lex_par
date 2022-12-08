@@ -6,6 +6,8 @@ class Writer:
     def __init__(self, file_path: str, default_path: str, tokens: List, token_save_path: str, str_token: str):
         self.default_path = './' + default_path + '/' + file_path
         self.token_save_path = './' + token_save_path + '/' + file_path
+        self.token_list = []
+        self.str_token = str_token
         if len(file_path.split('.')) < 2:
             raise JFileWriteError('Writer Error')
 
@@ -26,5 +28,13 @@ class Writer:
             file = open(self.token_save_path, 'w')
             file.write(str_token)
             file.close()
+            token_list = str_token.split('\n')
+            self.token_list = [token for token in token_list]
         except JFileWriteError:
             print('Create Directory Error')
+
+    def get_token_list(self):
+        return self.token_list
+
+    def get_str_token(self):
+        return self.str_token.replace('\n', ', ')

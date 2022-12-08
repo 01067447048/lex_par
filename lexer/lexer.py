@@ -88,13 +88,15 @@ class Lexer:
 
             if self.is_end():
                 print(self.source[self.start:self.current])
-                raise JSyntaxError('Unterminated string')
+                self.add_token(TokenType.UNKNOWN, self.source[self.start:self.current])
+                # raise JSyntaxError('Unterminated string')
 
-            self.advance()
-            self.add_token(
-                TokenType.DOUBLE_STRING if ch == '"' else TokenType.SINGLE_STRING,
-                self.source[self.start: self.current].strip(ch)
-            )
+            else:
+                self.advance()
+                self.add_token(
+                    TokenType.DOUBLE_STRING if ch == '"' else TokenType.SINGLE_STRING,
+                    self.source[self.start: self.current].strip(ch)
+                )
         elif is_digit(ch):
             while is_digit(self.peek()):
                 self.advance()
