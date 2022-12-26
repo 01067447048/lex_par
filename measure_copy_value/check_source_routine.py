@@ -3,6 +3,7 @@ import os
 from exception import JMeasureError
 from filecontroller import Reader, Explorer
 from typing import List
+from .config import THRESHOLD
 
 class CheckSourceRoutine:
 
@@ -10,16 +11,28 @@ class CheckSourceRoutine:
         self.source = source
         self.model = SentenceTransformer('krlvi/sentence-t5-base-nlpl-code_search_net')
         self.value = word_embedding_value
+        self.result = []
 
     def check_value(self, root: str):
         explorer = Explorer(root)
         explorer_paths = explorer.get_paths()
 
         for path in explorer_paths:
-            tmp = path.split('.')
-            key = tmp[len(tmp)-1]
+            tmp: list = path.split('.')
+            key: str = tmp[len(tmp)-2][1:].replace('/', '_')
             target = Reader(path)
             for value in self.value:
                 if value['file'] == key:
-                    value['score'] = value['score'] * util.cos_sim(self.model.encode(self.source), self.model.encode(target.get_source()))[0][0]
-                    break
+                    # print(f'value: {value["score"]}')
+                    # print(f'cos: {util.cos_sim(self.model.encode(self.source), self.model.encode(target.get_source()))}')
+                    # self.value['score'] = value['score'] * util.cos_sim(self.model.encode(self.source), self.model.encode(target.get_source()))[0][0]
+                    cos_value = value['score'] * util.cos_sim(self.model.encode(self.source), self.model.encode(target.get_source()))[0][0]
+                    if cos_value >= 0.7:
+                        self.result.append(
+                            {
+                                'file': value['file'],
+                                'score': cos_value
+                            }
+                        )
+                        break
+        self.result = sorted(self.result, key=lambda x: x['score'], reverse=True)

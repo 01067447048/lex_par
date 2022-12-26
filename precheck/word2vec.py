@@ -28,11 +28,12 @@ class W2V:
         doc2vec = None
         count = 0
         for line in source.split('\n'):
-            count += 1
-            if doc2vec is None:
-                doc2vec = model.wv[line]
-            else:
-                doc2vec = doc2vec + model.wv[line]
+            if line in model.wv.key_to_index:
+                count += 1
+                if doc2vec is None:
+                    doc2vec = model.wv[line]
+                else:
+                    doc2vec = doc2vec + model.wv[line]
 
         if doc2vec is not None:
             doc2vec = doc2vec / count

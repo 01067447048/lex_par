@@ -4,6 +4,7 @@ from .word2vec import W2V
 from gensim.models import Word2Vec
 from numpy import dot
 from numpy.linalg import norm
+import chardet
 
 
 def cos_sim(a, b):
@@ -29,6 +30,10 @@ class PreCheck:
         return token
 
     def check_data(self, path, file_name: str):
+        # file = open(path, 'rb')
+        # encoding = chardet.detect(file.read())
+        # print(encoding)
+        # file.close()
         file = open(path, 'r')
         tokens = file.read()
         file.close()
@@ -39,7 +44,13 @@ class PreCheck:
         #         break
         #     tokens.append(line)
         _, target_matrix = self.wv.get_source_vectors(tokens, self.model)
-        self.result.append({'file': file_name.split('.')[0], 'score': cos_sim(self.source, target_matrix)})
+        score = cos_sim(self.source, target_matrix)
+
+        if score < 0:
+            self.result.append({'file': file_name.split('.')[0], 'score': 0})
+        else:
+            self.result.append({'file': file_name.split('.')[0], 'score': score})
+
 
 
     def precheck(self, root: str):

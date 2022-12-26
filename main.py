@@ -11,6 +11,7 @@ from gensim.models import Doc2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 from numpy import dot
 from numpy.linalg import norm
+import pandas as pd
 
 
 def cos_sim(a, b):
@@ -142,19 +143,32 @@ def main():
     if len(sys.argv) != 2:
         print('python main.py source_path')
         exit()
-
+    main_start_time = time.time()
     explorer = Explorer(sys.argv[1])
     explorer_paths = explorer.get_paths()
-    result = ''
+    print(f'file count : {len(explorer_paths)}')
+    result = []
 
     for path in explorer_paths:
+        start = time.time()
+        print(f'{path} start')
         precheck = PreCheck(create_source_token(path))
-        precheck.precheck('Python')
+        precheck.precheck('Java')
         check = CheckSourceRoutine(Reader(path).get_source(), precheck.result)
         check.check_value('./OpenSource')
-        print(f'source_file: {path} / most_score: {check.value}')
+        # print(f'source_file: {path} / most_score: {check.value}')
+        if len(check.result) > 0:
+            print(f'source_file: {path} / most_score: {check.result[0]} / taken time : {time.time() - start:.5f} sec')
+            result.append({'source_file': path, 'value': check.result, 'taken time': f'{time.time() - start:.5f} sec'})
+        else:
+            print(f'source_file: {path} / [], taken time : {time.time() - start:.5f} sec')
+            result.append({'source_file': path, 'value': '[]', 'taken time': f'{time.time() - start:.5f} sec'})
+        # result.append({'source_file': path, 'value': check.result[0], 'taken time': f'{time.time() - start:.5f} sec'})
 
-# todo pandas 로 DataFrame 만들어서 비교 + 시각화.
+    df = pd.DataFrame(result)
+    # print(df)
+    df.to_csv('result.csv')
+    print(f'total : {time.time() - main_start_time:.5f} sec')
 
 if __name__ == '__main__':
     # create_opensource_token_file()
