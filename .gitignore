@@ -1,3 +1,5 @@
 *.zip
 *.model
 *.doc2vec
+*.csv
+*.txt
