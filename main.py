@@ -139,6 +139,7 @@ def w2v_pretest():
     _, doc2vec2 = wv.get_source_vectors(source2, model)
     print(cos_sim(doc2vec1, doc2vec2))
 
+# 실제 실행 코드.
 def main():
     if len(sys.argv) != 2:
         print('python main.py source_path')
@@ -155,6 +156,7 @@ def main():
         precheck = PreCheck(create_source_token(path))
         precheck.precheck('Java')
         check = CheckSourceRoutine(Reader(path).get_source(), precheck.result)
+        # ./OpenSource/{language}
         check.check_value('./OpenSource', 'Java')
         # print(f'source_file: {path} / most_score: {check.value}')
         if len(check.result) > 0:
