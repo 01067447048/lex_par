@@ -14,7 +14,7 @@ class Writer:
         try:
             if not os.path.exists('./' + default_path):
                 os.makedirs('./' + default_path)
-            file = open(self.default_path, 'w')
+            file = open(self.default_path, 'w', encoding='utf-8')
             for token in tokens:
                 if token == 99:
                     file.write(f'{token}')
@@ -25,7 +25,7 @@ class Writer:
             if not os.path.exists('./' + token_save_path):
                 os.makedirs('./' + token_save_path)
 
-            file = open(self.token_save_path, 'w')
+            file = open(self.token_save_path, 'w', encoding='utf-8')
             file.write(str_token)
             file.close()
             token_list = str_token.split('\n')

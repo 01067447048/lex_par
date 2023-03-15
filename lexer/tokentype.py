@@ -1,5 +1,6 @@
 from enum import Enum, auto
 
+
 class TokenType(Enum):
     LEFT_PAREN = auto()
     RIGHT_PAREN = auto()
@@ -58,11 +59,41 @@ class TokenType(Enum):
     NEW = 'new'
     CLASS = 'class'
     INTERFACE = 'interface'
-    EXTEND = 'extend'
+    EXTENDS = 'extends'
     IMPLEMENT = 'implement'
     PACKAGE = 'package'
     IMPORT = 'import'
     NOT = 'not'
+
+    STATIC = 'static'
+
+    PUBLIC = 'public'
+    PROTECTED = 'protected'
+    DEFAULT = 'default'
+    PRIVATE = 'private'
+    VOID = 'void'
+    THROWS = 'throws'
+    THROW = 'throw'
+    INT = 'int'
+    THIS = 'this'
+    BYTE = 'byte'
+    CHAR = 'char'
+    DO = 'do'
+    DOUBLE = 'double'
+    FINALLY = 'finally'
+    FLOAT = 'float'
+    INSTANCEOF = 'instanceof'
+    LONG = 'long'
+    NATIVE = 'native'
+    SHORT = 'short'
+    SUPER = 'super'
+    SYNCHRONIZED = 'synchronized'
+    ENUM = 'enum'
+    TRANSIENT = 'transient'
+    VOLATILE = 'voltile'
+    STRICTFP = 'strictfp'
+    ASSERT = 'assert'
+
     # PRINT = 'print'
 
     @classmethod

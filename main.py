@@ -155,7 +155,7 @@ def main():
         precheck = PreCheck(create_source_token(path))
         precheck.precheck('Java')
         check = CheckSourceRoutine(Reader(path).get_source(), precheck.result)
-        check.check_value('./OpenSource')
+        check.check_value('./OpenSource', 'Java')
         # print(f'source_file: {path} / most_score: {check.value}')
         if len(check.result) > 0:
             print(f'source_file: {path} / most_score: {check.result[0]} / taken time : {time.time() - start:.5f} sec')

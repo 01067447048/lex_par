@@ -70,7 +70,7 @@ class Lexer:
                 while self.peek() != '\n' and not self.is_end():
                     self.advance()
             elif self.match('*'):
-                while self.peek() != '\n' and not self.is_end():
+                while self.peek2() != '*/' and not self.is_end():
                     self.advance()
             else:
                 self.add_token(TokenType.SLASH)
@@ -130,6 +130,9 @@ class Lexer:
 
     def peek(self) -> str:
         return None if self.is_end() else self.source[self.current]
+
+    def peek2(self) -> str:
+        return None if self.is_end() or self.current+1 >= len(self.source) else self.source[self.current:self.current+1]
 
     def match(self, target: str) -> bool:
         if self.is_end():
