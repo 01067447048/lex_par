@@ -3,3 +3,7 @@
 *.doc2vec
 *.csv
 *.txt
+/OpenSource
+/test_source
+/java_change_code
+/java_change_code2
