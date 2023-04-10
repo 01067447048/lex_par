@@ -9,8 +9,8 @@ class CheckSourceRoutine:
 
     def __init__(self, source: str, word_embedding_value: List[dict]):
         self.source = source
-        self.model = SentenceTransformer('krlvi/sentence-t5-base-nlpl-code_search_net')
-        self.java_model = SentenceTransformer('ncoop57/codeformer-java')
+        self.model = SentenceTransformer('krlvi/sentence-t5-base-nlpl-code_search_net') ## Python
+        self.java_model = SentenceTransformer('ncoop57/codeformer-java') ## Java
         self.value = word_embedding_value
         self.result = []
 

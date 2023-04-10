@@ -154,10 +154,10 @@ def main():
         start = time.time()
         print(f'{path} start')
         precheck = PreCheck(create_source_token(path))
-        precheck.precheck('Java')
+        precheck.precheck('Java') ## Guesslang 이식을 하다가 말아서. 소스가 무슨 언어로 되어있는지 판별이 추가가 되어야 함.
         check = CheckSourceRoutine(Reader(path).get_source(), precheck.result)
         # ./OpenSource/{language}
-        check.check_value('./OpenSource', 'Java')
+        check.check_value('./OpenSource', 'Java') ## forder 이름 맞춰주기.
         # print(f'source_file: {path} / most_score: {check.value}')
         if len(check.result) > 0:
             print(f'source_file: {path} / most_score: {check.result[0]} / taken time : {time.time() - start:.5f} sec')
@@ -173,11 +173,18 @@ def main():
     print(f'total : {time.time() - main_start_time:.5f} sec')
 
 if __name__ == '__main__':
-    # create_opensource_token_file()
-    # measure_process()
-    # test()
-    # pre_check()
-    # w2v()
-    # w2v_test()
-    # w2v_pretest()
-    main()
+    create_opensource_token_file()  # Word2Vec 으로 오픈 소스의 문서 자체를 벡터화 진행. (학습)
+    main() # 시스템을 동작 시키는 과정.
+
+# 학습 과정.
+# 1. 렉서 > 소스코드 분석 > 예약어 구분 > 인코딩 & 임베딩 > W2V > D2V(Document 2 Vector)
+
+# 시스템을 동작 시키는 과정.
+# 작성된 코드를 가지고 > 어떤 언어로 구성 되어 있는지 판별 (Guesslang) >
+# 렉서 > 소스코드 분석 > 예약어 구분 > 인코딩 & 임베딩 > W2V > D2V(Document 2 Vector)
+# D2V Score 1번의 과정 지나쳐온 여러 오픈소스들과 비교 문서의 유사도를 측정(코사인 유사도)
+# -1 < < 1 >>> result < 0 >> 버려요. (코드의 형태가 아니라는 반증) stop  // result > 0
+# SBERT 1번코드 (시스템내에 갖고 있는 오픈소스) / 2번코드 (작성된 코드) result2
+# result2 * result = score
+
+# BERT > 개선버전 SBERT (Sentence BERT) Fine tunning
